@@ -1,0 +1,620 @@
+/* ===================================
+   ちひろの競馬予想 - メインスタイル
+=================================== */
+
+:root {
+  --lavender-light: #f3eeff;
+  --lavender-pale:  #e8d9ff;
+  --lavender-mid:   #c9a8f5;
+  --lavender-main:  #9b6dda;
+  --lavender-dark:  #6a3db8;
+  --lavender-deep:  #4a2880;
+  --pink-accent:    #f77fc2;
+  --pink-light:     #ffe0f5;
+  --gold:           #f0b849;
+  --text-main:      #3d2b5c;
+  --text-sub:       #7a5fa0;
+  --text-light:     #b09cc8;
+  --white:          #ffffff;
+  --card-shadow:    0 4px 20px rgba(155, 109, 218, 0.15);
+  --card-hover:     0 8px 30px rgba(155, 109, 218, 0.28);
+  --radius:         16px;
+  --radius-sm:      10px;
+  --transition:     0.25s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+  background: linear-gradient(135deg, #f8f0ff 0%, #fde8f8 50%, #f0e4ff 100%);
+  min-height: 100vh;
+  color: var(--text-main);
+  background-attachment: fixed;
+}
+
+/* ===== ヘッダー ===== */
+.site-header {
+  background: linear-gradient(135deg, var(--lavender-deep) 0%, var(--lavender-main) 60%, #c46fd4 100%);
+  color: var(--white);
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(74, 40, 128, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 120%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 24px 24px;
+  gap: 20px;
+  position: relative;
+}
+
+.header-deco {
+  font-size: 2.8rem;
+  opacity: 0.7;
+  animation: float 3s ease-in-out infinite;
+}
+.header-deco.right { animation-delay: 1.5s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.header-title-wrap {
+  text-align: center;
+}
+
+.header-sub {
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  opacity: 0.85;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.2);
+  display: inline-block;
+  padding: 2px 14px;
+  border-radius: 20px;
+}
+
+.header-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  line-height: 1.2;
+}
+
+.header-tagline {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* ナビ */
+.nav {
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.nav ul li a {
+  display: block;
+  padding: 12px 24px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 1px;
+  transition: background var(--transition), color var(--transition);
+  border-radius: 0;
+}
+
+.nav ul li a:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+/* ===== メインコンテナ ===== */
+.container {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+/* ===== お知らせバナー ===== */
+.notice-banner {
+  background: linear-gradient(90deg, var(--pink-light), #f9e8ff);
+  border: 2px solid var(--pink-accent);
+  border-radius: var(--radius);
+  padding: 14px 22px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: var(--lavender-dark);
+  font-size: 0.95rem;
+  box-shadow: 0 2px 12px rgba(247, 127, 194, 0.2);
+}
+
+.notice-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* ===== セクション共通 ===== */
+.section {
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--lavender-deep);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 3px dashed var(--lavender-pale);
+}
+
+.title-icon {
+  font-size: 1.6rem;
+}
+
+.section-desc {
+  color: var(--text-sub);
+  margin-bottom: 24px;
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+/* ===== レースカード ===== */
+.race-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.race-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  border: 2px solid var(--lavender-pale);
+}
+
+.race-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover);
+}
+
+.race-card.featured {
+  border-color: var(--gold);
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 700px) {
+  .race-card.featured {
+    grid-column: 1 / -1;
+  }
+}
+
+.race-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, var(--gold), #f0a020);
+  color: var(--white);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(240, 184, 73, 0.4);
+  letter-spacing: 1px;
+}
+
+.race-header {
+  background: linear-gradient(135deg, var(--lavender-light), var(--lavender-pale));
+  padding: 18px 20px 16px;
+  border-bottom: 2px solid var(--lavender-pale);
+}
+
+.race-date {
+  font-size: 0.82rem;
+  color: var(--text-sub);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.race-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--lavender-deep);
+  margin: 4px 0;
+}
+
+.race-venue {
+  font-size: 0.82rem;
+  color: var(--text-sub);
+}
+
+.race-body {
+  padding: 20px;
+}
+
+.pick-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.pick {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.pick-1 { background: #fff7e0; border-left: 4px solid var(--gold); }
+.pick-2 { background: #f0f7ff; border-left: 4px solid #6aabf7; }
+.pick-3 { background: #fff0f8; border-left: 4px solid var(--pink-accent); }
+.pick-4 { background: #f4fff0; border-left: 4px solid #7dd87d; }
+
+.pick-label {
+  font-weight: 800;
+  color: var(--lavender-dark);
+  font-size: 0.85rem;
+  grid-row: 1;
+}
+
+.pick-horse {
+  font-weight: 700;
+  color: var(--text-main);
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.pick-num {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  margin-left: 4px;
+}
+
+.pick-reason {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+.buy-tips {
+  background: var(--lavender-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  color: var(--lavender-dark);
+}
+
+.buy-title {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+/* 自信度バー */
+.confidence-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--lavender-light);
+  border-top: 1px solid var(--lavender-pale);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.confidence-label {
+  color: var(--text-sub);
+  min-width: 44px;
+}
+
+.bar {
+  flex: 1;
+  background: var(--lavender-pale);
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lavender-main), var(--pink-accent));
+  border-radius: 20px;
+  transition: width 1s ease;
+}
+
+.confidence-num {
+  color: var(--lavender-dark);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ===== 成績統計 ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 24px 16px;
+  text-align: center;
+  border: 2px solid var(--lavender-pale);
+  transition: transform var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-card.accent {
+  background: linear-gradient(135deg, var(--lavender-main), var(--lavender-dark));
+  border-color: var(--lavender-dark);
+}
+
+.stat-card.accent .stat-num,
+.stat-card.accent .stat-unit,
+.stat-card.accent .stat-label {
+  color: var(--white);
+}
+
+.stat-num {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--lavender-dark);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-unit {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-weight: 700;
+}
+
+/* 的中履歴テーブル */
+.history-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  font-size: 0.92rem;
+}
+
+.history-table thead {
+  background: linear-gradient(135deg, var(--lavender-main), var(--lavender-dark));
+  color: var(--white);
+}
+
+.history-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.history-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--lavender-pale);
+  color: var(--text-main);
+}
+
+.history-table tbody tr:hover {
+  background: var(--lavender-light);
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.result-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.result-badge.hit {
+  background: linear-gradient(135deg, #d4f5d4, #b8eab8);
+  color: #2a7d2a;
+}
+
+.result-badge.miss {
+  background: linear-gradient(135deg, #ffe8e8, #ffc8c8);
+  color: #c0392b;
+}
+
+/* ===== 予想ポイント ===== */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  box-shadow: var(--card-shadow);
+  border: 2px solid var(--lavender-pale);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover);
+  border-color: var(--lavender-mid);
+}
+
+.tip-icon {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.tip-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--lavender-deep);
+  margin-bottom: 10px;
+}
+
+.tip-text {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--text-sub);
+}
+
+/* ===== ちひろについて ===== */
+.about-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--card-shadow);
+  border: 2px solid var(--lavender-pale);
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.about-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--lavender-pale), var(--pink-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  flex-shrink: 0;
+  border: 3px solid var(--lavender-mid);
+  box-shadow: 0 4px 16px rgba(155, 109, 218, 0.25);
+}
+
+.about-text h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--lavender-deep);
+  margin-bottom: 14px;
+}
+
+.about-text p {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+  margin-bottom: 10px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  background: linear-gradient(135deg, var(--lavender-main), var(--lavender-dark));
+  color: var(--white);
+  padding: 8px 18px;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 3px 10px rgba(106, 61, 184, 0.3);
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 16px rgba(106, 61, 184, 0.4);
+}
+
+/* ===== フッター ===== */
+.site-footer {
+  background: linear-gradient(135deg, var(--lavender-deep), var(--lavender-dark));
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 28px 20px;
+}
+
+.footer-note {
+  font-size: 0.78rem;
+  margin-bottom: 8px;
+  opacity: 0.75;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 600px) {
+  .header-deco { display: none; }
+  .race-cards { grid-template-columns: 1fr; }
+  .about-card { flex-direction: column; align-items: center; text-align: center; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .tips-grid { grid-template-columns: 1fr; }
+  .nav ul li a { padding: 10px 14px; font-size: 0.85rem; }
+}
