@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X Post Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>𝕏 Post Scheduler</h1>
+      <nav>
+        <button class="nav-btn active" data-view="calendar">カレンダー</button>
+        <button class="nav-btn" data-view="list">一覧</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Calendar View -->
+    <section id="view-calendar" class="view active">
+      <div class="calendar-header">
+        <button id="prev-month" class="arrow-btn">&#8249;</button>
+        <h2 id="calendar-title"></h2>
+        <button id="next-month" class="arrow-btn">&#8250;</button>
+        <button class="new-btn" id="new-post-btn-cal">＋ 新規投稿</button>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </section>
+
+    <!-- List View -->
+    <section id="view-list" class="view">
+      <div class="list-header">
+        <h2>投稿一覧</h2>
+        <button class="new-btn" id="new-post-btn-list">＋ 新規投稿</button>
+      </div>
+      <div id="post-list"></div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">新規投稿</h3>
+        <button class="close-btn" id="modal-close">&times;</button>
+      </div>
+      <form id="post-form">
+        <input type="hidden" id="post-id">
+        <div class="form-group">
+          <label for="post-content">投稿内容 <span class="counter" id="char-counter">0 / 280</span></label>
+          <textarea id="post-content" rows="5" placeholder="投稿内容を入力してください..." maxlength="280" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="post-date">投稿日時</label>
+            <input type="datetime-local" id="post-date" required>
+          </div>
+          <div class="form-group">
+            <label for="post-status">ステータス</label>
+            <select id="post-status">
+              <option value="scheduled">予定</option>
+              <option value="posted">投稿済</option>
+              <option value="draft">下書き</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="modal-cancel">キャンセル</button>
+          <button type="submit" class="btn-primary">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div id="confirm-overlay" class="modal-overlay hidden">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>投稿を削除</h3>
+      </div>
+      <p class="confirm-text">この投稿を削除しますか？この操作は取り消せません。</p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="confirm-cancel">キャンセル</button>
+        <button class="btn-danger" id="confirm-delete">削除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Detail Panel -->
+  <div id="day-panel" class="day-panel hidden">
+    <div class="day-panel-header">
+      <h3 id="day-panel-title"></h3>
+      <button class="close-btn" id="day-panel-close">&times;</button>
+    </div>
+    <div id="day-panel-content"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
